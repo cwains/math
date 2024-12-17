@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch and Execute Code</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fetch and Execute Code</h1>
+  <label for="url">Enter URL to Fetch JavaScript:</label>
+  <input type="text" id="url" placeholder="https://example.com/script.js" />
+  <button onclick="fetchAndExecuteCode()">Fetch and Execute Code</button>
+
+  <div id="output"></div>
+
+  <script>
+    function fetchAndExecuteCode() {
+      const url = document.getElementById('url').value;
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = 'Fetching and executing code from: ' + url;
+
+      fetch(url)
+        .then(response => response.text())
+        .then(code => {
+          try {
+            // Use eval to execute the fetched JavaScript code
+            eval(code);
+          } catch (error) {
+            outputDiv.innerHTML = 'Error executing code: ' + error.message;
+          }
+        })
+        .catch(error => {
+          outputDiv.innerHTML = 'Error fetching code: ' + error.message;
+        });
+    }
+  </script>
+</body>
+</html>
